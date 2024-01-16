@@ -16,7 +16,6 @@ func GetCoffees(c *gin.Context) {
 	c.JSON(http.StatusOK, coffees)
 }
 
-
 func CreateCoffee(c *gin.Context) {
 	var coffeeInput models.Coffee
 	if err := c.ShouldBindJSON(&coffeeInput); err != nil {
@@ -24,13 +23,19 @@ func CreateCoffee(c *gin.Context) {
 		return
 	}
 
+	totalPrice := coffeeInput.Price * float64(coffeeInput.TotalCoffee)
+
+	coffeeInput.TotalPrice = totalPrice
+
 	coffee := models.Coffee{
-		Name: 			coffeeInput.Name,
-		Price: 			coffeeInput.Price,
-		CoffeeTypeID: 	coffeeInput.CoffeeTypeID,
+		Name:         coffeeInput.Name,
+		Price:        coffeeInput.Price,
+		TotalCoffee:  coffeeInput.TotalCoffee,
+		TotalPrice:   coffeeInput.TotalPrice,
+		CoffeeTypeID: coffeeInput.CoffeeTypeID,
 	}
 
-	if err := db.DB.Create(&coffee).Error;err != nil {
+	if err := db.DB.Create(&coffee).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create coffee"})
 		return
 	}
@@ -53,7 +58,11 @@ func UpdateCoffee(c *gin.Context) {
 		return
 	}
 
+	totalPrice := coffee.Price * float64(coffee.TotalCoffee)
+	coffee.TotalPrice = totalPrice
+
 	db.DB.Save(&coffee)
+	db.DB.Preload("CoffeeType").First(&coffee)
 	c.JSON(http.StatusOK, coffee)
 }
 
@@ -67,6 +76,7 @@ func DeleteCoffee(c *gin.Context) {
 	}
 
 	db.DB.Delete(&coffee)
+
 	c.JSON(http.StatusOK, gin.H{"message": "Coffee deleted"})
 }
 

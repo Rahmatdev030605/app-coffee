@@ -60,6 +60,34 @@ func SetupRoutes(router *gin.Engine) {
 	api.POST("/absence-employee-add", handlers.AddAbsenceEmployee)
 	api.GET("/absence-employee/:id", handlers.GetAbsenceEmployeeByID)
 
+
+	//Payment
+	api.GET("/payments", handlers.GetPayment)
+	api.POST("/payments-add", handlers.CreatePayment)
+	api.PUT("/payments-update/:id", handlers.UpdatePayment)
+	api.DELETE("/payments-delete/:id", handlers.DeletePayment)
+	api.GET("/payments/:id", handlers.GetPaymentById)
+
+	//MENU
+
+	//MenuCake
+	api.GET("/cake", handlers.GetCake)
+	api.POST("/cake-add", handlers.CreateCake)
+	api.PUT("/cake-update/:id", handlers.UpdateCake)
+	api.DELETE("/cake-delete/:id", handlers.DeleteCake)
+
+	//MenuSnack
+	api.GET("/snack", handlers.GetSnack)
+	api.POST("/snack-add", handlers.CreateSnack)
+	api.PUT("/snack-update/:id", handlers.UpdateSnack)
+	api.DELETE("/snack-delete/:id", handlers.DeleteSnack)
+
+	//MenuWestern
+	api.GET("/western", handlers.GetWestern)
+	api.POST("/western-add", handlers.CreateWestern)
+	api.PUT("/western-update/:id", handlers.UpdateWestern)
+	api.DELETE("/western-delete/:id", handlers.DeleteWestern)
+
 	//User
 	api.GET("/user", handlers.GetAllUsers)
 	api.GET("/user/:id", handlers.GetUserByID)

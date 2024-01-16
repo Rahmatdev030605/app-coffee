@@ -46,10 +46,15 @@ func Connect() {
 		&models.Table{},
 		&models.HistoryBooking{},
 		&models.EmployeeAbsence{},
+		&models.Payment{},
+		// &models.MenuFood{},
+		&models.MenuCake{},
+		&models.MenuSnack{},
+		&models.MenuWestern{},
 		)
 
 	// Seed Initial data
-		// models.SeedCoffeeType(DB)
+		// models.SeedCoffeeType(DB)`
 		// models.SeedEmployeeTypes(DB)
 
 		// Delete Initial data
